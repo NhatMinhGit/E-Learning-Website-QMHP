@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,15 +25,21 @@ public class CourseController {
     public String showCoursesList(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                   Model model) {
         Pageable pageable = PageRequest.of(page,3);
-        Page<Courses> coursesList = coursesService.findAllCourses((java.awt.print.Pageable) pageable);
+        Page<Courses> coursesList = coursesService.findAllCourses(pageable);
         model.addAttribute("coursesList", coursesList);
         return "courses-list";
     }
 
-    @GetMapping("/show-add-courses-form")
-    public String showAddCoursesForm(Model model) {
+    @GetMapping("/show-add-courses-page")
+    public String showAddCoursesPage(Model model) {
         CoursesDto coursesDto = new CoursesDto();
         model.addAttribute("coursesDto", coursesDto);
-        model.addAttribute("coursesDto", new Courses());
+        return "add-courses-page";
+    }
+
+    @GetMapping("/show-edit-course/{id}")
+    public String showEditCoursePage(@PathVariable(name = "id") Long id, Model model) {
+        model.addAttribute("course", coursesService.findCoursesById(id));
+        return "edit-course-page";
     }
 }

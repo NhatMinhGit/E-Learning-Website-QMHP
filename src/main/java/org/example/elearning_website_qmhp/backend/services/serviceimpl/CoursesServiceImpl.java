@@ -5,9 +5,9 @@ import org.example.elearning_website_qmhp.backend.repositories.ICoursesRepositor
 import org.example.elearning_website_qmhp.backend.services.CoursesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 
 @Service
 public class CoursesServiceImpl implements CoursesService {
@@ -16,7 +16,7 @@ public class CoursesServiceImpl implements CoursesService {
 
     @Override
     public Page<Courses> findAllCourses(Pageable pageable) {
-        return coursesRepository.findAllCourses((org.springframework.data.domain.Pageable) pageable);
+        return coursesRepository.findAllCourses(pageable);
     }
 
     @Override

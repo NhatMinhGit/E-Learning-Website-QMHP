@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,12 +24,16 @@ public class Courses {
     @Column(name = "title",nullable = false, length = 255)
     private String title;
 
-    @Column(name = "description", nullable = true, length = 510)
+    @Column(name = "description", nullable = false, length = 510)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private Users user;
+
+    @OneToMany(mappedBy = "course")
+    @Column(name = "enrollment", nullable = false, length = 255)
+    private List<Enrollments> enrollments;
 
     @Column(name = "create_at", nullable = false,updatable = false)
     private LocalDateTime createAt;

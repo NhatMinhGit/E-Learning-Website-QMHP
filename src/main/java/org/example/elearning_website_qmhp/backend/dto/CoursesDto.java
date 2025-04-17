@@ -13,6 +13,7 @@ public class CoursesDto {
     private Long courseId;
     private String title;
     private String description;
-    private Long userId;
+//    private Long userId;
+    private int enrollmentCount;
     private LocalDateTime createAt;
 }
