@@ -21,20 +21,30 @@ public class Courses {
     @Column(name = "course_id")
     private Long courseId;
 
-    @Column(name = "title",nullable = false, length = 255)
+    @Column(name = "title",nullable = false)
     private String title;
 
     @Column(name = "description", nullable = false, length = 510)
     private String description;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private Users user;
-
-    @OneToMany(mappedBy = "course")
-    @Column(name = "enrollment", nullable = false, length = 255)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Enrollments> enrollments;
 
     @Column(name = "create_at", nullable = false,updatable = false)
     private LocalDateTime createAt;
+
+    @Column(name = "update_at")
+    private LocalDateTime updateAt;
+
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createAt = now;
+        this.updateAt = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updateAt = LocalDateTime.now();
+    }
 }

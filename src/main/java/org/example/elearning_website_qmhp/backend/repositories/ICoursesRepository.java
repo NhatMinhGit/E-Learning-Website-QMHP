@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ICoursesRepository extends JpaRepository<Courses, Long> {
 
-    @Query("SELECT c FROM Courses c JOIN FETCH c.user")
+    @Query("SELECT c FROM Courses c JOIN FETCH c.enrollments")
     Page<Courses> findAllCourses(Pageable pageable);
 
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -37,7 +38,7 @@ public class Users {
     @Column(name = "status", nullable = false)
     private boolean status = true;
 
-    @Column(name = "create_at", nullable = false,updatable = false)
+    @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createAt;
 
 }
