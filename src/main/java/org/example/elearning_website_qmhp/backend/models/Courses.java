@@ -27,6 +27,9 @@ public class Courses {
     @Column(name = "description", nullable = false, length = 510)
     private String description;
 
+    @Column(name = "price")
+    private Double price;
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Enrollments> enrollments;
 

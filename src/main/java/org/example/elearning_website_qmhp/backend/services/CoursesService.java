@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CoursesService {
     Page<Courses> findAllCourses(Pageable pageable);
+    Page<Courses> findCoursesByTitle(String title, Pageable pageable);
     void saveCourses(Courses courses);
     Courses findCoursesById(Long id);
     void deleteCoursesById(Long id);

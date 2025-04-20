@@ -20,6 +20,11 @@ public class CoursesServiceImpl implements CoursesService {
     }
 
     @Override
+    public Page<Courses> findCoursesByTitle(String title, Pageable pageable) {
+        return coursesRepository.findAllCoursesByTitle(title,pageable);
+    }
+
+    @Override
     public void saveCourses(Courses courses) {
         coursesRepository.save(courses);
     }

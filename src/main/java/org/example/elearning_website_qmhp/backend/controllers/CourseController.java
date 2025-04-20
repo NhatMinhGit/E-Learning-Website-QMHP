@@ -23,7 +23,7 @@ public class CourseController {
     @GetMapping("/courses-list")
     public String showCoursesList(@RequestParam(name = "page", required = false, defaultValue = "0") int page,
                                   Model model) {
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 6);
         Page<Courses> coursesList = coursesService.findAllCourses(pageable);
         model.addAttribute("coursesList", coursesList);
         return "courses-list";
@@ -45,6 +45,13 @@ public class CourseController {
         return "edit-course-page";
     }
 
+    @GetMapping("/show-course-detail/{id}")
+    public String showCourseDetailPage(@RequestParam(name = "id") Long id, Model model) {
+        Courses courses = coursesService.findCoursesById(id);
+        model.addAttribute("courses", courses);
+        return "course-detail-page";
+    }
+
     @PostMapping("/add-course")
     public String addCourse(@ModelAttribute("courseDto") CoursesDto coursesDto,
                             RedirectAttributes redirectAttributes) {
@@ -64,11 +71,26 @@ public class CourseController {
         return "redirect:/courses-list";
     }
 
-    @GetMapping("/courses-list/{id}/delete")
+    @PostMapping("/courses-list/{id}/delete")
     public String deleteCourse(@PathVariable(name = "id") Long id,
                                RedirectAttributes redirectAttributes) {
         coursesService.deleteCoursesById(id);
         redirectAttributes.addFlashAttribute("message", "Đã xóa thành công 1 khóa học!");
         return "redirect:/courses-list";
+    }
+
+    @GetMapping("/courses-list/search")
+    public String searchCourses(@RequestParam(name = "search") String title,
+                                @RequestParam(name = "page",required = false,defaultValue = "0") int page,
+                                Model model) {
+        Pageable pageable = PageRequest.of(page, 6);
+        if(title.trim().isEmpty()) {
+            Page<Courses> coursesList = coursesService.findAllCourses(pageable);
+            model.addAttribute("coursesList", coursesList);
+        } else {
+            Page<Courses> coursesList = coursesService.findCoursesByTitle(title.trim(), pageable);
+            model.addAttribute("coursesList", coursesList);
+        }
+        return "courses-list";
     }
 }

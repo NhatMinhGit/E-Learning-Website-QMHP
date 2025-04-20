@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Danh sách khóa học</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 80px;
+        }
+
+        .course-card img {
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .navbar-center-title {
+            font-weight: bold;
+            font-size: 20px;
+            color: white;
+        }
+
+        .btn-delete {
+            width: 32px;
+            height: 32px;
+            background-color: white;
+            color: red;
+            border: none;
+            font-size: 18px;
+            border-radius: 15%;
+            font-weight: bold;
+            text-align: center;
+            line-height: 30px;
+            padding: 0;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-delete:hover {
+            background-color: red;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <form class="d-flex" th:action="@{/courses-list/search}" method="get" role="search">
+            <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm..." aria-label="Search">
+            <button class="btn btn-outline-light" type="submit">Tìm</button>
+        </form>
+
+        <div class="d-none d-lg-flex justify-content-center flex-grow-1">
+            <div class="navbar-center-title">QHMP E-Learning</div>
+        </div>
+
+        <div class="d-flex">
+            <a th:href="@{/login}" class="btn btn-outline-light me-2">Đăng nhập</a>
+            <a th:href="@{/register}" class="btn btn-success">Đăng ký</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary mb-0">Khóa học nổi bật</h2>
+            <a href="/add-course" class="btn btn-primary btn-sm">Thêm khóa học mới</a>
+        </div>
+    </div>
+
+    <div class="row" th:each="c,l : ${coursesList}">
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card course-card h-100 position-relative">
+
+                <button class="btn-delete position-absolute top-0 end-0 mt-2 me-2"
+                        data-bs-toggle="modal" th:attr="data-bs-target='#modalDelete' + ${c.courseId}">
+                    &#10005;
+                </button>
+
+                <img th:src="${c.imageUrl}" class="card-img-top" th:alt="Hình ảnh đang bị lỗi"/>
+
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${c.title}"></h5>
+                    <p class="card-text" th:text="${c.description}"></p>
+                    <p class="card-text" th:text="'Học viên đã đăng ký: ' +${c.enrollments.size()}"></p>
+                    <p class="card-text" th:text="'Giá: ' + ${c.price}"></p>
+                </div>
+
+                <div class="action-buttons">
+                    <a th:href="@{'/show-course-detail/'+ ${c.courseId}}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                    <a th:href="@{'/show-edit-course/'+ ${c.courseId}}" class="btn btn-warning btn-sm">Cập nhật</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:each="c : ${coursesList}">
+    <div class="modal fade" th:id="'modalDelete' + ${c.courseId}" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xóa khóa học</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p th:text="'Bạn có chắc muốn xóa khóa học ' + ${c.title} + '?'"></p>
+                    <small style="color: red; font-style: italic">Lưu ý hành động này không thể hoàn tác!</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+
+                    <form th:action="@{'/courses-list/' + ${c.courseId} + '/delete'}" method="post">
+                        <button type="submit" class="btn btn-danger">Xác nhận</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
