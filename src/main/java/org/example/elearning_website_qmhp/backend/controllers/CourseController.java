@@ -77,6 +77,7 @@ public class CourseController {
         Courses courses = coursesService.findCoursesById(courseEditDto.getCourseId());
         courses.setTitle(courseEditDto.getTitle());
         courses.setDescription(courseEditDto.getDescription());
+        courses.setPrice(courseEditDto.getPrice());
         coursesService.saveCourses(courses);
         redirectAttributes.addFlashAttribute("message","Chỉnh sửa thànhc công khoá học " + courseEditDto.getTitle() + "!");
         return "redirect:/courses-list";

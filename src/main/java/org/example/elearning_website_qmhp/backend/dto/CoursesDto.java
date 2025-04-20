@@ -15,6 +15,6 @@ public class CoursesDto {
     private String description;
     private int enrollmentCount;
     private Double price;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+//    private LocalDateTime createAt;
+//    private LocalDateTime updateAt;
 }

@@ -53,9 +53,10 @@
             margin-bottom: 15px;
         }
     </style>
+
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
         <form class="d-flex" th:action="@{/courses-list/search}" method="get" role="search">
@@ -73,6 +74,7 @@
         </div>
     </div>
 </nav>
+
 <div class="container my-5">
     <div class="container my-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -81,22 +83,24 @@
         </div>
     </div>
 
+    <h2 th:text="${message}"></h2>
+
     <div class="row" th:each="c,l : ${coursesList}">
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card course-card h-100 position-relative">
 
                 <button class="btn-delete position-absolute top-0 end-0 mt-2 me-2"
-                        data-bs-toggle="modal" th:attr="data-bs-target='#modalDelete' + ${c.courseId}">
+                        data-bs-toggle="modal" th:attr="data-bs-target=${'#modalDelete' + c.courseId}">
                     &#10005;
                 </button>
 
-                <img th:src="@{'https://placehold.co/600x400'(text=${c.title})}" class="card-img-top" alt="Hình ảnh đang bị lỗi"/>
+                <img th:src="'https://placehold.co/600x400?text=' + ${c.title}" class="card-img-top" alt="Lỗi hình ảnh"/>
 
                 <div class="card-body">
                     <h5 class="card-title" th:text="${c.title}"></h5>
                     <p class="card-text" th:text="${c.description}"></p>
                     <p class="card-text" th:text="'Học viên đã đăng ký: ' +${c.enrollments.size()}"></p>
-                    <p class="card-text" th:text="'Giá: ' + ${c.price}"></p>
+                    <p class="card-text"><strong>Giá:</strong> <span th:text="${#numbers.formatDecimal(c.price, 0, 'COMMA', '.', '₫')}"></span></p>
                 </div>
 
                 <div class="action-buttons">
