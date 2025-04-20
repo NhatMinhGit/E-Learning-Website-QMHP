@@ -19,12 +19,6 @@
             object-fit: cover;
         }
 
-        .navbar-center-title {
-            font-weight: bold;
-            font-size: 20px;
-            color: white;
-        }
-
         .btn-delete {
             width: 32px;
             height: 32px;
@@ -41,6 +35,12 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        .navbar-center-title {
+            font-weight: bold;
+            font-size: 20px;
+            color: white;
+        }
+
         .btn-delete:hover {
             background-color: red;
             color: white;
@@ -55,7 +55,6 @@
     </style>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
@@ -74,12 +73,11 @@
         </div>
     </div>
 </nav>
-
 <div class="container my-5">
     <div class="container my-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="text-primary mb-0">Khóa học nổi bật</h2>
-            <a href="/add-course" class="btn btn-primary btn-sm">Thêm khóa học mới</a>
+            <a th:href="@{/show-add-course-page}" class="btn btn-primary btn-sm">Thêm khóa học mới</a>
         </div>
     </div>
 
@@ -92,7 +90,7 @@
                     &#10005;
                 </button>
 
-                <img th:src="${c.imageUrl}" class="card-img-top" th:alt="Hình ảnh đang bị lỗi"/>
+                <img th:src="@{'https://placehold.co/600x400'(text=${c.title})}" class="card-img-top" alt="Hình ảnh đang bị lỗi"/>
 
                 <div class="card-body">
                     <h5 class="card-title" th:text="${c.title}"></h5>

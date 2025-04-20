@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -54,7 +55,11 @@ public class CourseController {
 
     @PostMapping("/add-course")
     public String addCourse(@ModelAttribute("courseDto") CoursesDto coursesDto,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes,
+                            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add-course-page";
+        }
         Courses courses = new Courses();
         BeanUtils.copyProperties(coursesDto, courses);
         coursesService.saveCourses(courses);
@@ -63,11 +68,17 @@ public class CourseController {
     }
 
     @PostMapping("/edit-course")
-    public String editCourse(@ModelAttribute("courseEditDto") CourseEditDto courseEditDto) {
+    public String editCourse(@ModelAttribute("courseEditDto") CourseEditDto courseEditDto,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "edit-course-page";
+        }
         Courses courses = coursesService.findCoursesById(courseEditDto.getCourseId());
         courses.setTitle(courseEditDto.getTitle());
         courses.setDescription(courseEditDto.getDescription());
         coursesService.saveCourses(courses);
+        redirectAttributes.addFlashAttribute("message","Chỉnh sửa thànhc công khoá học " + courseEditDto.getTitle() + "!");
         return "redirect:/courses-list";
     }
 

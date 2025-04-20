@@ -1,0 +1,46 @@
+.navbar-center-title {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+body {
+    background-color: #f8f9fa;
+    padding-top: 80px;
+}
+
+.course-card img {
+    height: 150px;
+    object-fit: cover;
+}
+
+.with-navbar-spacing {
+    margin-top: 100px;
+}
+
+.btn-delete {
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    color: red;
+    border: none;
+    font-size: 18px;
+    border-radius: 15%;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-delete:hover {
+    background-color: red;
+    color: white;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}

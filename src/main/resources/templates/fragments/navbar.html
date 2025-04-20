@@ -1,0 +1,21 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark py-3 fixed-top">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <form class="d-flex" th:action="@{/courses-list/search}" method="get" role="search">
+                <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm..." aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Tìm</button>
+            </form>
+
+            <div class="d-none d-lg-flex justify-content-center flex-grow-1">
+                <div class="navbar-center-title">QHMP E-Learning</div>
+            </div>
+
+            <div class="d-flex">
+                <a th:href="@{/login}" class="btn btn-outline-light me-2">Đăng nhập</a>
+                <a th:href="@{/register}" class="btn btn-success">Đăng ký</a>
+            </div>
+        </div>
+    </nav>
+</div>
+

@@ -11,4 +11,5 @@ public class CourseEditDto {
     private Long courseId;
     private String title;
     private String description;
+    private Double price;
 }
